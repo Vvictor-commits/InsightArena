@@ -22,7 +22,7 @@ export class MarketsService {
   private readonly logger = new Logger(MarketsService.name);
 
   async getPredictionStats(marketId: string): Promise<PredictionStatsDto[]> {
-    const market = await this.findByIdOrOnChainId(marketId);
+    await this.findByIdOrOnChainId(marketId);
 
     // TODO: Call contract to get predictions
     // For now, return mock data
@@ -76,7 +76,10 @@ export class MarketsService {
 
       return await this.marketsRepository.save(market);
     } catch (err) {
-      this.logger.error('Failed to save market to DB after Soroban success', err);
+      this.logger.error(
+        'Failed to save market to DB after Soroban success',
+        err,
+      );
       throw new BadGatewayException(
         'Market created on-chain but failed to save to database',
       );

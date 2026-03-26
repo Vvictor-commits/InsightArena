@@ -9,7 +9,12 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { PredictionStatsDto } from './dto/prediction-stats.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { MarketsService } from './markets.service';
 import { Market } from './entities/market.entity';
 import { CreateMarketDto } from './dto/create-market.dto';
@@ -35,7 +40,9 @@ export class MarketsController {
     type: [PredictionStatsDto],
   })
   @ApiResponse({ status: 404, description: 'Market not found' })
-  async getMarketPredictions(@Param('id') id: string): Promise<PredictionStatsDto[]> {
+  async getMarketPredictions(
+    @Param('id') id: string,
+  ): Promise<PredictionStatsDto[]> {
     return this.marketsService.getPredictionStats(id);
   }
 
