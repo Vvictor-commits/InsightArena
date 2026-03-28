@@ -9,7 +9,7 @@ pub mod escrow;
 // pub mod events;
 pub mod governance;
 pub mod invite;
-// pub mod leaderboard;
+pub mod leaderboard;
 pub mod market;
 pub mod oracle;
 pub mod prediction;
@@ -344,15 +344,19 @@ impl InsightArenaContract {
         season::get_active_season(&env)
     }
 
-    pub fn update_leaderboard(
+  pub fn update_leaderboard(
         env: Env,
         admin: Address,
         season_id: u32,
         entries: Vec<LeaderboardEntry>,
     ) -> Result<(), InsightArenaError> {
+        // Logic Check: Ensure contract is not paused
         config::ensure_not_paused(&env)?;
+
+        //  Delegate implementation to the season module
         season::update_leaderboard(&env, admin, season_id, entries)?;
 
+        // . Update Snapshot List for historical tracking
         let list_key = DataKey::SnapshotSeasonList;
         let mut seasons: Vec<u32> = env
             .storage()
