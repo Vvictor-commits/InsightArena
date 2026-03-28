@@ -8,10 +8,10 @@ type PageBackgroundProps = {
 
 export default function PageBackground({ children }: PageBackgroundProps) {
   return (
-    <div className="absolute inset-0 h-full w-full pointer-events-none z-0">
+    <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900" />
       <svg
-        className="absolute inset-0 h-full w-full opacity-15"
+        className="absolute inset-0 w-full h-full opacity-15"
         viewBox="0 0 1000 1000"
         preserveAspectRatio="xMidYMid slice"
       >
